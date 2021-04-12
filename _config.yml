@@ -3,12 +3,12 @@ name:  "Eunji"
 bio:  뚝딱뚝딱 개발일지
 
 # twitter summary info
-description:  A blog about E-Commerce and Product Management
+description:  A blog about Development
 
 # if it's an external image, update below for true
 # better with square images
 external-image: false
-picture:  assets/images/profile.jpg
+picture:  assets/images/profile.JPG
 
 baseurl: ''
 url: 'https://dleunji.github.io/'
@@ -51,7 +51,7 @@ author:
   name: dleunji
   bio: 개발자로 성장중...
   external-image: false
-  picture: assets/images/profile.jpg
+  picture: assets/images/profile.JPG
     #     twitter: johndoe
     # jamesfoster:
     #     name: James Foster
