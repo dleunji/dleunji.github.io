@@ -1,0 +1,131 @@
+[
+  
+    {
+      "title"    : "커먼컴퓨터 인턴",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/blog/%EC%B6%9C%EA%B7%BC-%EC%9D%B4%ED%8B%80%EC%B0%A8/",
+      "date"     : "2021-04-02 00:00:00 +0900",
+  "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n  ,\n  {% for page in site.pages %}\n   {\n     {% if page.title != nil %}\n        \"title\"    : \"{{ page.title | escape }}\",\n        \"category\" : \"{{ page.category }}\",\n        \"tags\"     : \"{{ page.tags | join: ', ' }}\",\n        \"url\"      : \"{{ site.baseurl }}{{ page.url }}\",\n        \"date\"     : \"{{ page.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n     {% endif %}\n   } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
+      "title"    : "Network 01",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/blog/Network-01/",
+      "date"     : "2021-04-01 00:00:00 +0900",
+  "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n  ,\n  {% for page in site.pages %}\n   {\n     {% if page.title != nil %}\n        \"title\"    : \"{{ page.title | escape }}\",\n        \"category\" : \"{{ page.category }}\",\n        \"tags\"     : \"{{ page.tags | join: ', ' }}\",\n        \"url\"      : \"{{ site.baseurl }}{{ page.url }}\",\n        \"date\"     : \"{{ page.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n     {% endif %}\n   } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
+      "title"    : "즐거운 사흘 간의 해커톤",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/blog/SW%EC%A4%91%EC%8B%AC%EB%8C%80%ED%95%99-%EA%B3%B5%EB%8F%99%ED%95%B4%EC%BB%A4%ED%86%A4/",
+      "date"     : "2021-02-08 00:00:00 +0900",
+  "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n  ,\n  {% for page in site.pages %}\n   {\n     {% if page.title != nil %}\n        \"title\"    : \"{{ page.title | escape }}\",\n        \"category\" : \"{{ page.category }}\",\n        \"tags\"     : \"{{ page.tags | join: ', ' }}\",\n        \"url\"      : \"{{ site.baseurl }}{{ page.url }}\",\n        \"date\"     : \"{{ page.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n     {% endif %}\n   } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } ,
+  
+    {
+      "title"    : "GitHub.io 블로그 개시",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/blog/first-post/",
+      "date"     : "2021-01-09 00:00:00 +0900",
+  "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n  ,\n  {% for page in site.pages %}\n   {\n     {% if page.title != nil %}\n        \"title\"    : \"{{ page.title | escape }}\",\n        \"category\" : \"{{ page.category }}\",\n        \"tags\"     : \"{{ page.tags | join: ', ' }}\",\n        \"url\"      : \"{{ site.baseurl }}{{ page.url }}\",\n        \"date\"     : \"{{ page.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n     {% endif %}\n   } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
+    } 
+  
+  ,
+  
+   {
+     
+        "title"    : "About",
+        "category" : "",
+        "tags"     : "",
+        "url"      : "/about/",
+        "date"     : "",
+  "content"   : "<!-- ![Profile Image](http://localhost:4000/assets/images/profile.jpg) -->\n\n<h1 style=\"text-align: left;\">Hyeyeon Yang</h1>\n\n<p>좋은 프로덕트를 만들고 싶어 서비스기획으로 커리어를 시작했지만 기획과 디자인의 경계 사이에서 오락가락하고 있습니다. 세상 만사에 관심이 많아 좋다는 건 꼭 써보고 만져보고 먹어봅니다.</p>\n\n<p>고객이 어떤 사람들인지 알아내고, 왜 우리 서비스를 써야 하는지를 정의하며 우리 서비스를 보다 편하게 이용할 수 있도록 서비스를 설계하는 것에 매력을 느꼈지만 역시 쉬운 게 하나 없는 세계에서 머리를 싸매는 중입니다.</p>\n\n<p></p>\n<hr />\n\n<h2>Skills</h2>\n\n<ul class=\"skill-list\">\n\t<li>Product Management</li>\n\t<li>E-Commerce Knowledge</li>\n\t<li>HTML &amp; CSS</li>\n\t<li>Wireframing &amp; Prototyping</li>\n\t<li>Customer Analysis</li>\n\t<li>Documentation</li>\n</ul>\n\n<p></p>\n\n<h2>Personal Attributes</h2>\n\n<ul class=\"skill-list\">\n\t<li>Love for Product</li>\n\t<li>Analytical</li>\n\t<li>Team Player</li>\n\t<li>Motivating Others</li>\n\t<li>Time Management</li>\n</ul>\n\n<p></p>\n<hr />\n\n<p><br />\n<br /></p>\n\n<!-- <h2>Projects</h2>\n\n<ul>\n\t<li><a href=\"https://github.com/\">Lorem Lorem</a></li>\n\t<li><a href=\"https://github.com/\">Ipsum Dolor</a></li>\n\t<li><a href=\"https://github.com/\">Dolor Lorem</a></li>\n</ul> -->\n"
+     
+   } ,
+  
+   {
+     
+        "title"    : "Categories",
+        "category" : "",
+        "tags"     : "",
+        "url"      : "/categories/",
+        "date"     : "",
+  "content"   : "<div id=\"archives\">\n\n</div>"
+     
+   } ,
+  
+   {
+     
+        "title"    : "Blog",
+        "category" : "",
+        "tags"     : "",
+        "url"      : "/blog/",
+        "date"     : "",
+  "content"   : "<section class=\"list\">\n\t\n\t\t\n\t        \n\t    \n\t        \n\t    \n\t        \n\t    \n\t        \n\t    \n\n\t\t\n\t\t\t<ul class=\"pagination\" role=\"navigation\">\n    \n\n    \n        <li id=\"page-prev\" class=\"disabled\"><span class=\"sr-only\">No Previous Page</span></li>\n    \n\n    \n      \n        <li class=\"page-number-active\">1</li>\n        \n    \n\n    \n        <li id=\"page-next\" class=\"disabled\"><span class=\"sr-only\">No Next Page</span></li>\n    \n</ul>\n\t\t\n\t\n</section>"
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home",
+        "category" : "",
+        "tags"     : "",
+        "url"      : "/",
+        "date"     : "",
+  "content"   : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Projects",
+        "category" : "",
+        "tags"     : "",
+        "url"      : "/projects/",
+        "date"     : "",
+  "content"   : "<section class=\"list\">\n    \n        \n    \n        \n    \n        \n    \n        \n    \n</section>\n"
+     
+   } ,
+  
+   {
+     
+   } ,
+  
+   {
+     
+   } ,
+  
+   {
+     
+   } ,
+  
+   {
+     
+   } ,
+  
+   {
+     
+        "title"    : "Tags",
+        "category" : "",
+        "tags"     : "",
+        "url"      : "/tags/",
+        "date"     : "",
+  "content"   : "<section class=\"list\">\n    <h1 class=\"title\">Tags</h1>\n\n    {% assign tags_list = site.tags %}\n\n    {% if tags_list.first[0] == null %}\n        {% for tag in tags_list %}\n            <a class=\"item\" href=\"#{{ tag | slugify }}\">{{ tag }}</a>\n        {% endfor %}\n    {% else %}\n        {% for tag in tags_list %}\n            <a class=\"item\" href=\"#{{ tag[0] | slugify }}\">{{ tag[0] }}</a>\n        {% endfor %}\n    {% endif %}\n\n    {% assign tags_list = nil %}\n</section>\n\n<hr>\n\n<section class=\"tag-list\">\n    {% for tag in site.tags  %}\n    <h2 class=\"title\" id=\"{{ tag[0] | slugify }}\">#{{ tag[0] }}</h2>\n\n    <ul class=\"list\">\n        {% assign pages_list = tag[1] %}\n        {% for post in pages_list reversed %}\n            {% if post.title != null %}\n                {% if group == null or group == post.group %}\n                    <li class=\"item\">\n                        <a class=\"url\" href=\"{{ site.url }}{{ post.url }}\">\n                            <aside class=\"date\"><time datetime=\"{{ post.date | date:\"%d-%m-%Y\" }}\">{{ post.date | date: \"%b %d %Y\" }}</time></aside>\n                            <h3 class=\"title\">{{ post.title }}</h3>\n                        </a>\n                    </li>\n                {% endif %}\n            {% endif %}\n        {% endfor %}\n        {% assign pages_list = nil %}\n        {% assign group = nil %}\n    </ul>\n\n    <div class=\"breaker\"></div>\n    {% endfor %}\n</section>\n"
+     
+   } ,
+  
+   {
+     
+   } ,
+  
+   {
+     
+   } 
+  
+]

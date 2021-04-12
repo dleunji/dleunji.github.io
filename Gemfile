@@ -11,4 +11,5 @@ gem 'jekyll-feed'
 gem 'jekyll-sitemap'
 gem 'jekyll-gist'
 gem 'jekyll-paginate'
+gem 'webrick'
 gem 'github-pages', group: :jekyll_plugins
