@@ -1,4 +1,14 @@
-source "https://rubygems.org"
-gem "minimal-mistakes-jekyll"
+source 'http://rubygems.org'
 
-gem "webrick", "~> 1.7"
+gem 'jekyll'
+gem 'rake'
+gem 'rouge'
+gem 'html-proofer'
+gem 'jemoji'
+gem 'jekyll-mentions'
+gem 'jekyll-seo-tag'
+gem 'jekyll-feed'
+gem 'jekyll-sitemap'
+gem 'jekyll-gist'
+gem 'jekyll-paginate'
+gem 'github-pages', group: :jekyll_plugins
