@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
-        <loc>http://localhost:4000/blog/%EC%B6%9C%EA%B7%BC-%EC%9D%B4%ED%8B%80%EC%B0%A8/</loc>
+        <loc>http://localhost:4000/blog/blog/%EC%B6%9C%EA%B7%BC-%EC%9D%B4%ED%8B%80%EC%B0%A8/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/blog/Network-01/</loc>
+        <loc>http://localhost:4000/blog/network/Network-01/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/blog/SW%EC%A4%91%EC%8B%AC%EB%8C%80%ED%95%99-%EA%B3%B5%EB%8F%99%ED%95%B4%EC%BB%A4%ED%86%A4/</loc>
+        <loc>http://localhost:4000/blog/blog/SW%EC%A4%91%EC%8B%AC%EB%8C%80%ED%95%99-%EA%B3%B5%EB%8F%99%ED%95%B4%EC%BB%A4%ED%86%A4/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/blog/first-post/</loc>
+        <loc>http://localhost:4000/blog/blog/first-post/</loc>
     </url>
     
 

@@ -2,36 +2,36 @@
   
     {
       "title"    : "커먼컴퓨터 인턴",
-      "category" : "",
+      "category" : "Blog",
       "tags"     : "",
-      "url"      : "/blog/%EC%B6%9C%EA%B7%BC-%EC%9D%B4%ED%8B%80%EC%B0%A8/",
+      "url"      : "/blog/blog/%EC%B6%9C%EA%B7%BC-%EC%9D%B4%ED%8B%80%EC%B0%A8/",
       "date"     : "2021-04-02 00:00:00 +0900",
   "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n  ,\n  {% for page in site.pages %}\n   {\n     {% if page.title != nil %}\n        \"title\"    : \"{{ page.title | escape }}\",\n        \"category\" : \"{{ page.category }}\",\n        \"tags\"     : \"{{ page.tags | join: ', ' }}\",\n        \"url\"      : \"{{ site.baseurl }}{{ page.url }}\",\n        \"date\"     : \"{{ page.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n     {% endif %}\n   } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,
   
     {
-      "title"    : "Network 01",
-      "category" : "",
+      "title"    : "기초 네트워크",
+      "category" : "Network",
       "tags"     : "",
-      "url"      : "/blog/Network-01/",
+      "url"      : "/blog/network/Network-01/",
       "date"     : "2021-04-01 00:00:00 +0900",
   "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n  ,\n  {% for page in site.pages %}\n   {\n     {% if page.title != nil %}\n        \"title\"    : \"{{ page.title | escape }}\",\n        \"category\" : \"{{ page.category }}\",\n        \"tags\"     : \"{{ page.tags | join: ', ' }}\",\n        \"url\"      : \"{{ site.baseurl }}{{ page.url }}\",\n        \"date\"     : \"{{ page.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n     {% endif %}\n   } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,
   
     {
       "title"    : "즐거운 사흘 간의 해커톤",
-      "category" : "",
+      "category" : "Blog",
       "tags"     : "",
-      "url"      : "/blog/SW%EC%A4%91%EC%8B%AC%EB%8C%80%ED%95%99-%EA%B3%B5%EB%8F%99%ED%95%B4%EC%BB%A4%ED%86%A4/",
+      "url"      : "/blog/blog/SW%EC%A4%91%EC%8B%AC%EB%8C%80%ED%95%99-%EA%B3%B5%EB%8F%99%ED%95%B4%EC%BB%A4%ED%86%A4/",
       "date"     : "2021-02-08 00:00:00 +0900",
   "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n  ,\n  {% for page in site.pages %}\n   {\n     {% if page.title != nil %}\n        \"title\"    : \"{{ page.title | escape }}\",\n        \"category\" : \"{{ page.category }}\",\n        \"tags\"     : \"{{ page.tags | join: ', ' }}\",\n        \"url\"      : \"{{ site.baseurl }}{{ page.url }}\",\n        \"date\"     : \"{{ page.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n     {% endif %}\n   } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } ,
   
     {
       "title"    : "GitHub.io 블로그 개시",
-      "category" : "",
+      "category" : "Blog",
       "tags"     : "",
-      "url"      : "/blog/first-post/",
+      "url"      : "/blog/blog/first-post/",
       "date"     : "2021-01-09 00:00:00 +0900",
   "content"   : "[\n  {% for post in site.posts %}\n    {\n      \"title\"    : \"{{ post.title | escape }}\",\n      \"category\" : \"{{ post.category }}\",\n      \"tags\"     : \"{{ post.tags | join: ', ' }}\",\n      \"url\"      : \"{{ site.baseurl }}{{ post.url }}\",\n      \"date\"     : \"{{ post.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n    } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n  ,\n  {% for page in site.pages %}\n   {\n     {% if page.title != nil %}\n        \"title\"    : \"{{ page.title | escape }}\",\n        \"category\" : \"{{ page.category }}\",\n        \"tags\"     : \"{{ page.tags | join: ', ' }}\",\n        \"url\"      : \"{{ site.baseurl }}{{ page.url }}\",\n        \"date\"     : \"{{ page.date }}\",\n  \"content\"   : {{ page.content | jsonify }}\n     {% endif %}\n   } {% unless forloop.last %},{% endunless %}\n  {% endfor %}\n]\n"
     } 
@@ -45,7 +45,7 @@
         "tags"     : "",
         "url"      : "/about/",
         "date"     : "",
-  "content"   : "<!-- ![Profile Image](http://localhost:4000/assets/images/profile.jpg) -->\n\n<h1 style=\"text-align: left;\">Hyeyeon Yang</h1>\n\n<p>좋은 프로덕트를 만들고 싶어 서비스기획으로 커리어를 시작했지만 기획과 디자인의 경계 사이에서 오락가락하고 있습니다. 세상 만사에 관심이 많아 좋다는 건 꼭 써보고 만져보고 먹어봅니다.</p>\n\n<p>고객이 어떤 사람들인지 알아내고, 왜 우리 서비스를 써야 하는지를 정의하며 우리 서비스를 보다 편하게 이용할 수 있도록 서비스를 설계하는 것에 매력을 느꼈지만 역시 쉬운 게 하나 없는 세계에서 머리를 싸매는 중입니다.</p>\n\n<p></p>\n<hr />\n\n<h2>Skills</h2>\n\n<ul class=\"skill-list\">\n\t<li>Product Management</li>\n\t<li>E-Commerce Knowledge</li>\n\t<li>HTML &amp; CSS</li>\n\t<li>Wireframing &amp; Prototyping</li>\n\t<li>Customer Analysis</li>\n\t<li>Documentation</li>\n</ul>\n\n<p></p>\n\n<h2>Personal Attributes</h2>\n\n<ul class=\"skill-list\">\n\t<li>Love for Product</li>\n\t<li>Analytical</li>\n\t<li>Team Player</li>\n\t<li>Motivating Others</li>\n\t<li>Time Management</li>\n</ul>\n\n<p></p>\n<hr />\n\n<p><br />\n<br /></p>\n\n<!-- <h2>Projects</h2>\n\n<ul>\n\t<li><a href=\"https://github.com/\">Lorem Lorem</a></li>\n\t<li><a href=\"https://github.com/\">Ipsum Dolor</a></li>\n\t<li><a href=\"https://github.com/\">Dolor Lorem</a></li>\n</ul> -->\n"
+  "content"   : "<!-- ![Profile Image](http://localhost:4000/assets/images/profile.JPG) -->\n\n<h1 style=\"text-align: left;\">Hyeyeon Yang</h1>\n\n<p>좋은 프로덕트를 만들고 싶어 서비스기획으로 커리어를 시작했지만 기획과 디자인의 경계 사이에서 오락가락하고 있습니다. 세상 만사에 관심이 많아 좋다는 건 꼭 써보고 만져보고 먹어봅니다.</p>\n\n<p>고객이 어떤 사람들인지 알아내고, 왜 우리 서비스를 써야 하는지를 정의하며 우리 서비스를 보다 편하게 이용할 수 있도록 서비스를 설계하는 것에 매력을 느꼈지만 역시 쉬운 게 하나 없는 세계에서 머리를 싸매는 중입니다.</p>\n\n<p></p>\n<hr />\n\n<h2>Skills</h2>\n\n<ul class=\"skill-list\">\n\t<li>Product Management</li>\n\t<li>E-Commerce Knowledge</li>\n\t<li>HTML &amp; CSS</li>\n\t<li>Wireframing &amp; Prototyping</li>\n\t<li>Customer Analysis</li>\n\t<li>Documentation</li>\n</ul>\n\n<p></p>\n\n<h2>Personal Attributes</h2>\n\n<ul class=\"skill-list\">\n\t<li>Love for Product</li>\n\t<li>Analytical</li>\n\t<li>Team Player</li>\n\t<li>Motivating Others</li>\n\t<li>Time Management</li>\n</ul>\n\n<p></p>\n<hr />\n\n<p><br />\n<br /></p>\n\n<!-- <h2>Projects</h2>\n\n<ul>\n\t<li><a href=\"https://github.com/\">Lorem Lorem</a></li>\n\t<li><a href=\"https://github.com/\">Ipsum Dolor</a></li>\n\t<li><a href=\"https://github.com/\">Dolor Lorem</a></li>\n</ul> -->\n"
      
    } ,
   
@@ -56,7 +56,7 @@
         "tags"     : "",
         "url"      : "/categories/",
         "date"     : "",
-  "content"   : "<div id=\"archives\">\n\n</div>"
+  "content"   : "<div id=\"archives\">\n\n  <div class=\"archive-group\">\n    \n    <div id=\"#Blog\"></div>\n    <p></p>\n    <h2 class=\"category-head\">Blog</h2>\n    <a name=\"Blog\"></a>\n    \n    <article class=\"archive-item\">\n    <aside class=\"date\" style='float: right; color: $gama; font-size: smaller; font-weight: 300;'><time datetime=\"02-04-2021\">Apr 02 2021</time></aside>\n    <h4><a href=\"/blog/blog/%EC%B6%9C%EA%B7%BC-%EC%9D%B4%ED%8B%80%EC%B0%A8/\">커먼컴퓨터 인턴</a></h4>\n    </article>\n    \n    <article class=\"archive-item\">\n    <aside class=\"date\" style='float: right; color: $gama; font-size: smaller; font-weight: 300;'><time datetime=\"08-02-2021\">Feb 08 2021</time></aside>\n    <h4><a href=\"/blog/blog/SW%EC%A4%91%EC%8B%AC%EB%8C%80%ED%95%99-%EA%B3%B5%EB%8F%99%ED%95%B4%EC%BB%A4%ED%86%A4/\">즐거운 사흘 간의 해커톤</a></h4>\n    </article>\n    \n    <article class=\"archive-item\">\n    <aside class=\"date\" style='float: right; color: $gama; font-size: smaller; font-weight: 300;'><time datetime=\"09-01-2021\">Jan 09 2021</time></aside>\n    <h4><a href=\"/blog/blog/first-post/\">GitHub.io 블로그 개시</a></h4>\n    </article>\n    \n  </div>\n\n  <div class=\"archive-group\">\n    \n    <div id=\"#Network\"></div>\n    <p></p>\n    <h2 class=\"category-head\">Network</h2>\n    <a name=\"Network\"></a>\n    \n    <article class=\"archive-item\">\n    <aside class=\"date\" style='float: right; color: $gama; font-size: smaller; font-weight: 300;'><time datetime=\"01-04-2021\">Apr 01 2021</time></aside>\n    <h4><a href=\"/blog/network/Network-01/\">기초 네트워크</a></h4>\n    </article>\n    \n  </div>\n\n</div>"
      
    } ,
   
@@ -67,7 +67,7 @@
         "tags"     : "",
         "url"      : "/blog/",
         "date"     : "",
-  "content"   : "<section class=\"list\">\n\t\n\t\t\n\t        \n\t    \n\t        \n\t    \n\t        \n\t    \n\t        \n\t    \n\n\t\t\n\t\t\t<ul class=\"pagination\" role=\"navigation\">\n    \n\n    \n        <li id=\"page-prev\" class=\"disabled\"><span class=\"sr-only\">No Previous Page</span></li>\n    \n\n    \n      \n        <li class=\"page-number-active\">1</li>\n        \n    \n\n    \n        <li id=\"page-next\" class=\"disabled\"><span class=\"sr-only\">No Next Page</span></li>\n    \n</ul>\n\t\t\n\t\n</section>"
+  "content"   : "<section class=\"list\">\n\t\n\t\t\n\t        \n    <div class=\"item \">\n        <a class=\"url\" href=\"http://localhost:4000/blog/blog/%EC%B6%9C%EA%B7%BC-%EC%9D%B4%ED%8B%80%EC%B0%A8/\">\n            <aside class=\"date\"><time datetime=\"02-04-2021\">Apr 02 2021</time></aside>\n            \n            <h3 class=\"title\">커먼컴퓨터 인턴</h3>\n        </a>\n    </div>\n\n\t    \n\t        \n    <div class=\"item \">\n        <a class=\"url\" href=\"http://localhost:4000/blog/network/Network-01/\">\n            <aside class=\"date\"><time datetime=\"01-04-2021\">Apr 01 2021</time></aside>\n            \n            <h3 class=\"title\">기초 네트워크</h3>\n        </a>\n    </div>\n\n\t    \n\t        \n    <div class=\"item \">\n        <a class=\"url\" href=\"http://localhost:4000/blog/blog/SW%EC%A4%91%EC%8B%AC%EB%8C%80%ED%95%99-%EA%B3%B5%EB%8F%99%ED%95%B4%EC%BB%A4%ED%86%A4/\">\n            <aside class=\"date\"><time datetime=\"08-02-2021\">Feb 08 2021</time></aside>\n            \n            <h3 class=\"title\">즐거운 사흘 간의 해커톤</h3>\n        </a>\n    </div>\n\n\t    \n\t        \n    <div class=\"item \">\n        <a class=\"url\" href=\"http://localhost:4000/blog/blog/first-post/\">\n            <aside class=\"date\"><time datetime=\"09-01-2021\">Jan 09 2021</time></aside>\n            \n            <h3 class=\"title\">GitHub.io 블로그 개시</h3>\n        </a>\n    </div>\n\n\t    \n\n\t\t\n\t\t\t<ul class=\"pagination\" role=\"navigation\">\n    \n\n    \n        <li id=\"page-prev\" class=\"disabled\"><span class=\"sr-only\">No Previous Page</span></li>\n    \n\n    \n      \n        <li class=\"page-number-active\">1</li>\n        \n    \n\n    \n        <li id=\"page-next\" class=\"disabled\"><span class=\"sr-only\">No Next Page</span></li>\n    \n</ul>\n\t\t\n\t\n</section>"
      
    } ,
   

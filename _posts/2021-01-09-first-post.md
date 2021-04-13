@@ -2,7 +2,9 @@
 layout : post
 title : "GitHub.io 블로그 개시"
 excerpt : "본격적인 공부를 위해 블로그 전격 개시"
-
+category : Blog
+blog : true
+author : dleunji
 ---
 
 ## 블로그를 시작한 이유
