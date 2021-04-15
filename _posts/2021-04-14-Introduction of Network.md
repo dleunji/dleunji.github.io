@@ -1,5 +1,5 @@
 ---
-Title : "Introduction"
+Title : "Introduction of Network"
 layout : post
 date : 2021-04-14
 category : Network
@@ -11,9 +11,6 @@ description : 기초 네트워크
 ### Summary : 
 
 - Network Edge : hosts, access net, physical media
-- Network Core : packet/circuit switching, Internet structure
-- Performance : loss, delay, throughput
-- protocol layers, service models
 
 # Chapter 1. Introduction
 
