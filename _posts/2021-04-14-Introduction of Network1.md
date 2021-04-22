@@ -175,6 +175,4 @@ description : 기초 네트워크
 
      d = 1 / s
 
-   - 1 kbps = 1,000 bps
-   - 1 mbps = 1000 kbps = 1,000,000 bps
-
+   - 1 kbps = 1,000 bp
