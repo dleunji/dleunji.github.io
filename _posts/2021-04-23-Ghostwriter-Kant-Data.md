@@ -1,7 +1,7 @@
 ---
 Title : "Ghostwriter Kant Data Preprocess"
 layout : post
-date : 2021-04-17
+date : 2021-04-23
 category : Internship
 blog : true
 author : dleunji
@@ -233,3 +233,225 @@ line = line.replace('5.', '')
 이제 더 이상 머리를 쥐어짜며 칸트 에세이를 쓰실 필요가 없습니다! 칸트가 여러분 대신 기꺼이 글을 작성해줄 거니까요. 혹여 그가 오랜 기간 무덤에서 지내면서 그의 이론을 잊었을 거라는 우려는 하실 필요 없습니다. 그는 '순수이성비판'을 철저히 복습했으니까요.
 
 여러분도 `Teachable NLP`로 어려운 과목에 대한 레포트를 대신 작성해주는 모델을 쉽게 만들어, API로 글을 생성하실 수 있습니다.
+
+
+
+[English ver.]
+
+**Teachable-NLP** is a GPT-2 Finetuning program with a text(.txt) file without writing NLP codes. As soon as I recognized it, I planned to make a model creating Kantian sentences.
+
+I dreamed a someone who writes an Philosophy essay in place of me when I majored in Philophy. So I came up with the idea that I tranined GPT-2 with 'The Critique of Pure Reason' of Kant and Kant becomes Ghostwriter and does writes Kantian essay in place of students.
+
+1. **Acquiring the data**
+
+I acquired the text(.txt) file of 'The Critique of Pure Reason' from [Project Gutenberg](https://www.gutenberg.org). The original text is in Deutsch, but Teachable NLP works only in English. So I used the English version.
+
+Moreover, I had to check the copyright status of text file. It published hundreds years ago, so the copyright was Public domain. It makes me free to copyright issue even if I edit the text and use the text to machine learning.
+
+![kant_gut](https://user-images.githubusercontent.com/46207836/115824821-866d3480-a443-11eb-8be7-a583724c8d43.png)
+
+**2. Preprocessing the data**
+
+There were unwanted data in the text file (e.g. headings like SECOND', 'I.').
+
+It might cause `garbage out`, so I removed them.
+
+```
+SECOND DIVISION—TRANSCENDENTAL LOGIC
+
+TRANSCENDENTAL DIALECTIC.
+INTRODUCTION.
+
+I. Of Transcendental Illusory Appearance
+
+We termed dialectic in general a logic of appearance. This does not
+signify a doctrine of probability; for probability is truth, only
+cognized upon insufficient grounds, and though the information it gives
+us is imperfect, it is not therefore deceitful. Hence it must not be
+separated
+```
+
+Also the diagrams which explains the Kantian theories will disrupt the context with the irregular space to Teachable-NLP. After skmming the text, I found all the diagrams and annotations started with spaces and other regular sentences didn't. I removed the unnecessary data by using the pattern.
+
+```
+											NOTHING
+                        AS
+
+                        1
+                Empty Conception
+                 without object,
+                  _ens rationis_
+           2                               3
+     Empty object of               Empty intuition
+      a conception,                without object,
+     _nihil privativum              ens imaginarium_
+                        4
+                   Empty object
+                 without conception,
+                  _nihil negativum_
+```
+
+It was simple data preprocessing with `Python` .
+
+With a `for loop`, I checked every line ( `f.readlines()`)and add only valid data to the new data file. For that, I examined the sentence carefully and tried to find out patterns.
+
+The text in front of PREFACE consists of publication and irrelevant with Kant. So I ignored the data before a sentence starting with PREFACE. And then, I filtered out the headings and gap in the intervals.
+
+As a result, I found out the pattern of headings (e.g. Section, Chaper, Introduction) and the terminologies of Logic, Roman numerals. And I tried to make use of the contents in the parentheses by substring the text and kept in context.
+
+```python
+file_name = "The Critique of Pure Reason.txt"
+f = open(file_name, "rt", encoding='utf-8')
+file = f.readlines()
+f.close()
+sentences = []
+start = 0
+for line in file: 
+  if line.startswith('PREFACE'): 
+	# In front of PREFACE, no values
+	# var start is used to flag
+    start = 1
+    continue
+  elif start != 1:
+    continue
+  elif line.startswith('End'):
+	# And vice versa, behind END, no values
+	# So break the loop
+    break
+  elif line.startswith(' '):
+	# Remove the diagrams and annotations
+    continue
+	# Remove headings
+  elif line.startswith('Section'):
+    continue
+  elif line.startswith('Chapter'):
+    continue
+  elif line.startswith('Introduction'):
+    continue
+  elif line.startswith('FIRST') or line.startswith('SECOND') or line.startswith(
+      'THIRD'):
+    continue
+  elif line.startswith('PROOF') or line.startswith('ANTITHESIS'):
+    continue
+  elif line.startswith('OBSERVATION'):
+    continue
+  elif line.startswith('ON THE THESIS'):
+    continue
+  elif line.startswith('I.') or line.startswith('II.') 
+		or line.startswith('III.') or line.startswith('IV.') 
+		or line.startswith('V.') or line.startswith('VI.'):
+		# Remove only the Symbols and keep the valid long titles
+    line = line[line.find('.') + 2:]
+  elif line.startswith('-'):
+    continue
+  elif line.startswith('§'):
+    continue
+	# Remove CRLF
+  elif line == "\\n":
+    continue
+  elif line.startswith('('):
+    line = line[4:]
+  sentences.append(line)
+```
+
+Finally I got a 1.2MB data with simple sentences. Some Deutsch proper noun and colons are still there. If I remove them, however, it doesn't make sense. So I kept them given the rarely small amounts.
+
+[preprocess1.txt](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/45f457ef-8708-4f73-9a74-a25f63e19959/preprocess1.txt)
+
+This is the introduction of data after preprocess.
+
+```
+Human reason, in one sphere of its cognition, is called upon to
+consider questions, which it cannot decline, as they are presented by
+its own nature, but which it cannot answer, as they transcend every
+faculty of the mind.
+It falls into this difficulty without any fault of its own. It begins
+with principles, which cannot be dispensed with in the field of
+experience, and the truth and sufficiency of which are, at the same
+time, insured by experience. With these principles it rises, in
+obedience to the laws of its own nature, ...
+```
+
+**3. Training with Teachable-NLP**
+
+I uploaded the data to Teachable-NLP and set the option to finetune. I've already finetuned the model by myself and noticed it takes longer time to finetune larger model. I focused on reducing the loading, so I chose `small model`. But I chose `epoch 5` to ensure least at least accuracy.
+
+**4. Generate Text from Ghostwriter**
+
+The user should give him a prefix of essay. If prefix is 'The demon', The sentences prints out as below. I considered the user can control the length of essay, however, I fixed the length to 200 for GPU utilzation rate.
+
+<img width="1439" alt="_2021-04-14__4 48 24" src="https://user-images.githubusercontent.com/46207836/115824214-933d5880-a442-11eb-853b-733a13cded5d.png">
+
+**5. Re-preprocessing**
+
+Even though I've already preprocessed in No.2, some symbols and headings appear because I missed them (e.g.1. , Remark, -) at that time.
+
+```
+**Remark II.** Now with this view all empirical use of our faculty of
+cognition in the determination of time is in perfect accordance.
+**—**Ovid, Metamorphoses. **xiii**
+The one relates to the objects of the pure understanding, and is
+intended to demonstrate and to render comprehensible the objective
+validity of its **_à priori_ conceptions**;
+**1.** Mathematical judgements are always synthetical. Hitherto this fact,
+though incontestably true and very important in its consequences,
+```
+
+So I preprocess data again and clearly remove them. For that, I added the code as below.
+
+```python
+# missed headings
+elif line.startswith('Introductory'):
+    continue
+elif line.startswith('The remark:'):
+    continue
+elif line.startswith('Remark'):
+		continue
+# remove the bracket
+if line.find('[') > -1:
+      if line.find(']') > -1:
+        left = line.find('[')
+        right = line.find(']')
+        new = line[:left-1] + line[right+1:]
+        line = new
+.
+.
+.
+# remove index and symbols in the middle of sentence
+line = line.replace('§','')
+line = line.replace('_', '')
+line = line.replace(';', '. ')
+line = line.replace('(a)', '')
+line = line.replace('(b)', '')
+line = line.replace('(c)', '')
+line = line.replace('(1)', '')
+line = line.replace('(2)', '')
+line = line.replace('(3)', '')
+line = line.replace('(4)', '')
+line = line.replace('1.', '')
+line = line.replace('2.', '')
+line = line.replace('3.', '')
+line = line.replace('4.', '')
+line = line.replace('5.', '')
+```
+
+**Q. Problems**
+
+- **Parentheses** : It is ought to be removed for routine dialogue. But for essay, the parentheses doesn't matter.
+- **Some texts are stiil alive** : There are some texts that seems same, but they are actually different in code. In case of that, you can copy & paste the ambigous text to the preprocessing code, not just type.
+
+**5. More Efficient**
+
+Over the double preprocessing, the GPT-2 model became fine-tuned to more accurate. Finally with the prefix, the Kantian essay is created automatically based on 'The Critique of Pure Reason' and it relieves the students who have to write the long essay.
+
+**6. Finally**
+
+**The program '[Ghostwriter Kant](https://master-kant-dleunji.endpoint.ainize.ai)' fixed the length of essay and the text is printed only at once. If you want to elaborate the essay, write in [TabTab](https://kubecon-tabtab-ainize-team.endpoint.ainize.ai/?modelUrl=https://train-avgw7n5kbmsb7wrip2a8-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune&text=I'm Kant. Please let me know how to get started!) that is linked to the Fine-tuned model! In [TabTab](https://kubecon-tabtab-ainize-team.endpoint.ainize.ai/?modelUrl=https://train-avgw7n5kbmsb7wrip2a8-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune&text=I'm Kant. Please let me know how to get started!), you can print out short sentence, and select a sentence in 5 candidate sentences.**
+
+![tabtab화면](https://user-images.githubusercontent.com/46207836/115824889-a3a20300-a443-11eb-94a6-5a42e414e417.png)
+
+**7. Wrap up**
+
+Now you don't have to rack your brain to write Kantian essay for Philosophical assignments. Ghostwriter Kant would write it in place of you. Perhaps you might to worry he forgot his theory while he lay in the tomb. But you don't have to worry about that! Because he reviewed 'The Critique of Pure Reason' thoroughly!
+
+You can also easily create a model that writes a essay on difficult subjects with `Teachable NLP` and generate articles with Model APIs.
