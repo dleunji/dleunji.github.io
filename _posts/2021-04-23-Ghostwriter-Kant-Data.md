@@ -18,7 +18,7 @@ Teachable-NLP는 코드를 따로 작성할 필요없이 **하나의 텍스트 �
 
 칸트의 가장 대표적인 저서 중 '순수이성비판(The Critique of Pure Reason) 은 [Project Gutenberg](https://www.gutenberg.org)에서 무료로 txt 형식으로 구할 수 있었습니다. 원문은 독일어로 작성되었으나, 원활한 학습과 생성된 글의 활용성을 고려하여 영어 번역본을 데이터로 선정하였습니다. 그리고 이는 고전 도서로, Public Domain License 상태였습니다. 이로써 학습에 활용하여도 저작권적인 문제가 발생하지 않음을 확인하였습니다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f147c9d1-e2d8-47e9-8fda-541cf8c161a1/_2021-04-15__10.33.30.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f147c9d1-e2d8-47e9-8fda-541cf8c161a1/_2021-04-15__10.33.30.png)
+![kant_gut](https://user-images.githubusercontent.com/46207836/115824821-866d3480-a443-11eb-8be7-a583724c8d43.png)
 
 **2. Preprocessing the data**
 
@@ -224,7 +224,7 @@ line = line.replace('5.', '')
 
 **만약 글의 방향을 세심하게 다듬고 싶으시다면, 튜닝한 모델과 자동으로 연동된 [TabTab](https://kubecon-tabtab-ainize-team.endpoint.ainize.ai/?modelUrl=https://train-avgw7n5kbmsb7wrip2a8-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune&text=I'm Kant. Please let me know how to get started!)에서 글을 작성해 보세요! TabTab에서는 짧은 문장마다 출력할 수 있으며, 5개의 후보 문장 중에 원하는 문장을 선택할 수 있으므로 글의 방향을 설정하실 수 있습니다.**
 
-![_2021-04-15__4.02.43](/Users/ieunji/Downloads/_2021-04-15__4.02.43.png)
+![tabtab화면](https://user-images.githubusercontent.com/46207836/115824889-a3a20300-a443-11eb-94a6-5a42e414e417.png)
 
 
 
