@@ -12,7 +12,7 @@ description : Network Layer
 
 Teachable-NLP는 코드를 따로 작성할 필요없이 **하나의 텍스트 파일**만으로 GPT-2을 튜닝할 수 있는 프로그램입니다.
 
-이를 활용하여 철학과 학부 시절 자주하던 상상을 실현하고자 칸트의 '순수이성비판'을 활용하여 칸트식의 문장을 생성할 수 있는 모델을 생성하기를 마음 먹었습니다. 단순히 문장을 생성하는 것보다는 스토리라인을 덧붙여 마치 칸트가 대필작가(Ghostwriter)가 되어 학생들 대신 글을 써주는 방식으로 프로그램, [Ghostwriter Kant](https://master-kant-dleunji.endpoint.ainize.ai)를 구상하였습니다.
+이를 활용하여 철학과 학부 시절 자주하던 상상을 실현하고자 칸트의 '순수이성비판'을 활용하여 칸트식의 문장을 생성할 수 있는 모델을 생성하기를 마음 먹었습니다. 단순히 문장을 생성하는 것보다는 스토리라인을 덧붙여 마치 칸트가 대필작가(Ghostwriter)가 되어 학생들 대신 글을 써주는 방식으로 프로그램, [Ghostwriter Kant](https://ainize-kant-dleunji.endpoint.ainize.ai)를 구상하였습니다.
 
 1. **Acquiring the data**
 
@@ -218,7 +218,7 @@ line = line.replace('5.', '')
 
 **6. Finally**
 
-이러한 과정을 거쳐 마침내 [Ghostwriter Kant](https://master-kant-dleunji.endpoint.ainize.ai)를 만나보실 수 있습니다.
+이러한 과정을 거쳐 마침내 [Ghostwriter Kant](https://ainize-kant-dleunji.endpoint.ainize.ai)를 만나보실 수 있습니다.
 
 대신 이 프로그램에서는 length = 200으로 고정되고, 글이 한 번에 출력되어 글의 방향을 입맛대로 설정할 수 없다는 단점이 있습니다.
 
@@ -446,7 +446,7 @@ Over the double preprocessing, the GPT-2 model became fine-tuned to more accurat
 
 **6. Finally**
 
-**The program '[Ghostwriter Kant](https://master-kant-dleunji.endpoint.ainize.ai)' fixed the length of essay and the text is printed only at once. If you want to elaborate the essay, write in [TabTab](https://kubecon-tabtab-ainize-team.endpoint.ainize.ai/?modelUrl=https://train-avgw7n5kbmsb7wrip2a8-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune&text=I'm Kant. Please let me know how to get started!) that is linked to the Fine-tuned model! In [TabTab](https://kubecon-tabtab-ainize-team.endpoint.ainize.ai/?modelUrl=https://train-avgw7n5kbmsb7wrip2a8-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune&text=I'm Kant. Please let me know how to get started!), you can print out short sentence, and select a sentence in 5 candidate sentences.**
+**The program '[Ghostwriter Kant](https://ainize-kant-dleunji.endpoint.ainize.ai)' fixed the length of essay and the text is printed only at once. If you want to elaborate the essay, write in [TabTab](https://kubecon-tabtab-ainize-team.endpoint.ainize.ai/?modelUrl=https://train-avgw7n5kbmsb7wrip2a8-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune&text=I'm Kant. Please let me know how to get started!) that is linked to the Fine-tuned model! In [TabTab](https://kubecon-tabtab-ainize-team.endpoint.ainize.ai/?modelUrl=https://train-avgw7n5kbmsb7wrip2a8-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune&text=I'm Kant. Please let me know how to get started!), you can print out short sentence, and select a sentence in 5 candidate sentences.**
 
 ![tabtab화면](https://user-images.githubusercontent.com/46207836/115824889-a3a20300-a443-11eb-94a6-5a42e414e417.png)
 

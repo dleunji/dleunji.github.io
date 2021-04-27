@@ -161,7 +161,7 @@ NLP에 대한 지식이 전무한 상황에서 해당 서비스를 만들 수 �
 
 <img width="1439" alt="_2021-04-14__4 48 24" src="https://user-images.githubusercontent.com/46207836/115836524-8c1e4680-a452-11eb-8f70-87ef24f52a79.png">
 
-또한 이렇게 제작한 Ghostwriter Kant를 Dockerfile과 함께 업로드 Github에 업로드한 뒤, [Ainize](https://ainize.ai/dleunji/kant?branch=ainize)에 Github에 레포지토리 주소를 입력하기만 하면 별도의 서버 비용이나 관리 없이 AI 서비스를 배포할 수 있었습니다. 제 Ghostwriter Kant 서비스를 체험해보고 싶은 분들은 [여기](https://ainize-kant-dleunji.endpoint.ainize.ai/)를 클릭해주세요.
+또한 이렇게 제작한 Ghostwriter Kant를 Dockerfile과 함께 업로드 Github에 업로드한 뒤, [Ainize](https://ainize.ai/dleunji/kant?branch=ainize)에 Github에 레포지토리 주소를 입력하기만 하면 별도의 서버 비용이나 관리 없이 AI 서비스를 배포할 수 있었습니다. 제 Ghostwriter Kant 서비스를 체험해보고 싶은 분들은 [여기](https://ainize-kant-dleunji.endpoint.ainize.ai)를 클릭해주세요.
 
 ![_2021-04-16__5 46 14](https://user-images.githubusercontent.com/46207836/115837018-1bc3f500-a453-11eb-9c47-79762e809672.png)
 
@@ -376,7 +376,7 @@ I worried if I could create the `Ghostwriter Kant` in the absence of knowledge o
 
 Moreover, if you upload the project with `Dockerfile` in Github and just fill out the url of repository of Github in [Ainize](https://ainize.ai/dleunji/kant?branch=ainize), you can serve your own AI service without cost of server.
 
-Anyone who wants to experience my `Ghostwriter Kant` service, please click [here](https://ainize-kant-dleunji.endpoint.ainize.ai/)!
+Anyone who wants to experience my `Ghostwriter Kant` service, please click [here](https://ainize-kant-dleunji.endpoint.ainize.ai)!
 
 ![_2021-04-16__5 46 14](https://user-images.githubusercontent.com/46207836/115837018-1bc3f500-a453-11eb-9c47-79762e809672.png)
 
