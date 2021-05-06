@@ -84,7 +84,8 @@ Servers로 명시된 주소에 모델이 업로드 되어있습니다. 해당 �
   ```json
   // e.g.
   {
-  	"text": [464, 26231,2470], //Encoded text
+  //Encoded text
+  	"text": [464, 26231,2470], 
     "length" : 8,
     "num_samples": 2,
   }
@@ -120,7 +121,71 @@ Servers로 명시된 주소에 모델이 업로드 되어있습니다. 해당 �
 
 ![TeachableNLPapi2 001](https://user-images.githubusercontent.com/46207836/115836439-71e46880-a452-11eb-977b-cc7ae4284207.jpeg)
 
-​	
+```html
+<div class="prefix-box">
+	<input type="text" id="prefix" name="prefix" placeholder="It starts with..." required>
+	<div class="search-btn" type="submit" onclick="submit()">
+	<!-- 검색 버튼 -->
+		<i class="fas fa-search"></i>
+	</div>
+</div>
+```
+
+그리고 해당 기능은 Javascript의 Promise를 활용하여 구현하였습니다.
+
+```javascript
+function submit(){
+	var prefix = document.getElementById("prefix");
+	var prefix_value = prefix.value;
+/* 입력된 내용이 없을 시 */
+	if (prefix_value == ""){
+	    alert('Please let me know how to get started!');
+	    return;
+	}
+	var formData = new FormData();
+/* form data에 해당 prefix를 append하여 {"context" : prefix_value} 형성. */
+	formData.append("context", prefix_value);
+/* /gpt2로 fetch 후 app.py를 거쳐 request를 보내고, app.py를 거쳐 response */
+	fetch(
+	    "/gpt2", 
+	    {
+	        method: "POST",
+	        body : formData
+	    }
+	)
+/* request에 대한 response가 파라미터 */ 
+/* app.py에서 request에 대한 response를 디코딩한 후 {'text: "..."} 으로 response */
+	.then(response => {
+	    if(response.status == 200){
+	        return response;
+	    }
+	    else if(response.status == 400){
+	        throw Error("Failed1");
+	    }
+	    else {
+	        throw Error("Failed2");
+	    }
+	})
+	.then(response => {
+	    res = response.json()
+	    return res
+	})
+/* 동적으로 HTML 변경 */
+	.then(response => {
+	    var text = response['text'] + "...<br>Now it's your turn!<br><br><br>";
+	    document.getElementsByClassName("essay")[0].innerHTML = text;
+	})
+/* 에러 처리 */
+	.catch(e => {
+	    var result = document.getElementsByClassName("essay")[0];
+	    result.textContent = e;
+	})
+}
+```
+
+**B. Backend**
+
+`Flask`로 API를 처리하였습니다.	
 
 ```python
 import requests
@@ -130,26 +195,26 @@ autoTokenizer = AutoTokenizer.from_pretrained("gpt2-large")
 
 @app.route('/gpt2', methods=['POST'])
 def gpt2():
-		# HTML에서 입력받은 폼데이터에서 텍스트 추출
+# HTML에서 입력받은 폼데이터에서 텍스트 추출
     prefix = request.form['context']
-		# 인코딩
+# 인코딩
     encodedText = autoTokenizer.encode(prefix)
     headers = {'Content-Type' : 'application/json; charset=utf-8'}
     data = {
         'text' : encodedText,
         'length' : 200
-				# 필요 시 num_samples 설정 가능, 미설정 시 default value = 1
+		# 필요 시 num_samples 설정 가능, 미설정 시 default value = 1
     }
-		# 모델 주소
+# 모델 주소
     url = "<https://train-avgw7n5kbmsb7wrip2a8-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune>"
-    # 해당 url로 POST request를 보낸 후, response
+# 해당 url로 POST request를 보낸 후, response
 		response = requests.post(url, headers = headers, data = json.dumps(data))
     if response.status_code == 200:
         res = response.json()
-				# 정상적인 response의 경우, response의 값을 디코딩
-				# skip_special_tokens는 optional, True의 경우 디코딩 과정에서 special_token은 생략
+		# 정상적인 response의 경우, response의 값을 디코딩
+		# skip_special_tokens는 optional, True의 경우 디코딩 과정에서 special_token은 생략
         text = autoTokenizer.decode(res[0], skip_special_tokens=True)
-				# 디코딩처리 후 Frontend로 값 전달
+		# 디코딩처리 후 Frontend로 값 전달
         return jsonify({'text' : text}), 200
     else:
         return jsonify({'fail' : 'eror'}), response.status_code
@@ -284,15 +349,15 @@ It is coded using `Promise` of Javascript.
 function submit(){
 	var prefix = document.getElementById("prefix");
 	var prefix_value = prefix.value;
-	/* If there input box is blank */
+/* If there input box is blank */
 	if (prefix_value == ""){
 	    alert('Please let me know how to get started!');
 	    return;
 	}
 	var formData = new FormData();
-	/* To append the prefix to form data, and make  {"context" : prefix_value}. */
+/* To append the prefix to form data, and make  {"context" : prefix_value}. */
 	formData.append("context", prefix_value);
-	/* To fetch the form to /gpt2, go through app.py, send Request, and then 
+/* To fetch the form to /gpt2, go through app.py, send Request, and then 
 get response from app.py*/
 	fetch(
 	    "/gpt2", 
@@ -301,8 +366,8 @@ get response from app.py*/
 	        body : formData
 	    }
 	)
-	/* The Reponse returned from request is parameter */ 
-	/* The request is encoded, and decoded like {'text: "..."} in app.py */
+/* The Reponse returned from request is parameter */ 
+/* The request is encoded, and decoded like {'text: "..."} in app.py */
 	.then(response => {
 	    if(response.status == 200){
 	        return response;
@@ -318,12 +383,12 @@ get response from app.py*/
 	    res = response.json()
 	    return res
 	})
-	/* To change HTML dynamically */
+/* To change HTML dynamically */
 	.then(response => {
 	    var text = response['text'] + "...<br>Now it's your turn!<br><br><br>";
 	    document.getElementsByClassName("essay")[0].innerHTML = text;
 	})
-	/* To handle the errors */
+/* To handle the errors */
 	.catch(e => {
 	    var result = document.getElementsByClassName("essay")[0];
 	    result.textContent = e;
@@ -343,26 +408,26 @@ autoTokenizer = AutoTokenizer.from_pretrained("gpt2-large")
 
 @app.route('/gpt2', methods=['POST'])
 def gpt2():
-		# Extract text from form data sent from HTML
+# Extract text from form data sent from HTML
     prefix = request.form['context']
-		# Encoding
+# Encoding
     encodedText = autoTokenizer.encode(prefix)
     headers = {'Content-Type' : 'application/json; charset=utf-8'}
     data = {
         'text' : encodedText,
         'length' : 200
-				# 'num_samples' key is optional, its default value is 1.
+		# 'num_samples' key is optional, its default value is 1.
 		}
-		# The server url
+# The server url
     url = "<https://train-avgw7n5kbmsb7wrip2a8-gpt2-train-teachable-ainize.endpoint.dev.ainize.ai/predictions/gpt-2-en-small-finetune>"
-    # To send POST request to url,and get response
+# To send POST request to url,and get response
 		response = requests.post(url, headers = headers, data = json.dumps(data))
     if response.status_code == 200:
         res = response.json()
-				# To Decode the value of response if response is valid
-				# 'skip_special_tokens' is optional. If it is True, special_token is excepted
+		# To Decode the value of response if response is valid
+		# 'skip_special_tokens' is optional. If it is True, special_token is excepted
         text = autoTokenizer.decode(res[0], skip_special_tokens=True)
-				# After decoding, deliver the text to frontend.
+		# After decoding, deliver the text to frontend.
         return jsonify({'text' : text}), 200
     else:
         return jsonify({'fail' : 'eror'}), response.status_code
