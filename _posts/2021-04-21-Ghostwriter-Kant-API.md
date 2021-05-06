@@ -38,32 +38,7 @@ Servers로 명시된 주소에 모델이 업로드 되어있습니다. 해당 �
 
 ![api](/Users/ieunji/dev/dleunji.github.io/assets/images/post/api.gif)
 
-**POST**
 
-![스크린샷 2021-04-22 오후 4 34 50](https://user-images.githubusercontent.com/46207836/115835936-d652f800-a451-11eb-80b4-2e13bfd7a50c.png)
-
-- `[모델 링크]/predictions/gpt-2-en-small-finetune`에 POST 형식의 `Raw JSON Request`를 보내면 글을 생성하실 수 있습니다.
-
-  e.g. https://train-qvbpkc5osu32fupvds7b-gpt2-train-teachable-ainize.endpoint.ainize.ai/`predictions/gpt-2-en-small-finetune`
-
-- 헤더는 `{'Content-Type' : 'application/json; charset=utf-8'}` 입니다.
-
-​	이 때 주의할 점은 `text가 array type`입니다.
-
-✰✰따라서 `반드시 text는 Request 전에 Tokenizer로 인코딩` 해야합니다.✰✰
-
-(하단 **3-B** **Backend** 코드에 **Tokenizer 사용 안내**가 있습니다.)
-
-```json
-// e.g.
-{
-	"text": [464, 26231,2470], //Encoded text
-  "length" : 8,
-  "num_samples": 2,
-}
-```
-
-![스크린샷 2021-04-22 오후 4 35 00](https://user-images.githubusercontent.com/46207836/115836087-06020000-a452-11eb-96a0-9adc820e6875.png)
 
 - **POST**
 
@@ -84,7 +59,6 @@ Servers로 명시된 주소에 모델이 업로드 되어있습니다. 해당 �
   ```json
   // e.g.
   {
-  //Encoded text
   	"text": [464, 26231,2470], 
     "length" : 8,
     "num_samples": 2,
