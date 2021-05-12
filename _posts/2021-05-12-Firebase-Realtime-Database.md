@@ -5,7 +5,7 @@ date : 2021-05-12
 category : Internship
 blog : true
 author : dleunji
-description : 코딩 테스트 준비
+description : Firebase
 ---
 
 그동안 SQL, NoSQL 문을 작성하거나 이론적으로 공부한 게 다인데, 드디어 실제 데이터를 다루어볼 기회가 생겼다. 우리 회사는 ainize 관련된 데이터는 Firebase Realtime Database로 관리한다. Firebase Realtime Database는 대표적인` NoSQL` 데이터베이스로 듣기만 했지, 이렇게 다룰 줄이야 `설렌당 히히♡` 
