@@ -552,3 +552,351 @@ var recentPostRef = firebase.database().ref('posts').limitToFirst(100);
 
 하위 요소가 **값에 따라** 정렬. 정렬 기준은 orderByChild()와 동일하지만 지정된 하위 키의 값 대신 노드의 값이 사용된다.
 
+
+
+## 데이터 저장
+
+| set         | **정의된 경로**(예: `messages/users/<username>`)에 데이터를 쓰거나 대체합니다. |
+| ----------- | ------------------------------------------------------------ |
+| update      | 정의된 경로에서 모든 데이터를 대체하지 않고 일부 키를 업데이트합니다. |
+| push        | 데이터베이스의 **데이터 목록에 추가**합니다. 목록에 새 노드를 푸시할 때마다 데이터베이스에서 **고유 키(예: `messages/users/<unique-user-id>/<username>`)를 생성**합니다. |
+| transaction | 동시 업데이트에 의해 손상될 수 있는 복잡한 데이터를 다루는 경우 transaction을 사용합니다. |
+
+기본 데이터베이스 쓰기 작업은 지정된 데이터베이스 참조에 새 데이터를 저장하고 해당 경로의 **기존 데이터를 모두 대체하는 set** 입니다.
+
+```javascript
+//Import Admin SDK
+var admin = require('firebase-admin');
+
+// Get a database reference to our blog
+var db = admin.database();
+var ref = db.ref("server/saving-data/fireblog");
+
+```
+
+- **사용자 데이터를 저장**
+
+고유한 사용자 이름을 기준으로 각 사용자를 저장하고 성명과 생일을 함게 저장하고자 한다.
+
+각 사용자는 고유한 사용자 이름을 갖게 되므로 별도의 키를 만들 필요가 없기 때문에 push메서드가 아니라 set 메서드를 사용하는 것이 좋다. 우선 사용자 데이터를 가리키는 데이터베이스 참조를 만든다. 그런 다음 `set()` / `setValue()`로 데이터베이스에 사용자 이름, 성명, 생일과 함께 사용자 객체를 저장한다. 문자열, 숫자, bool, null, 배열 또는 임의의 JSON 객체를 전달할 수 있다. null을 전달하면 지정된 위치에서 데이터가 삭제된다. 여기에서는 객체를 전달한다.
+
+```javascript
+var userRef = ref.child("users");//child : 하위 element 검색
+users.set({
+  alanisawesome: {
+    date_of_birth: "June 23, 1912",
+    full_name: "Alan Turing"
+  },
+  gracehop: {
+    date_of_birth: "December 9, 1906",
+    full_name: "Grace Hopper"
+  }
+});
+```
+
+JSON 객체가 데이터베이스에 저장될 때 객체 속성은 중첩된 형태로 데이터베이스 하위 위치에 자동으로 매핑된다. 이제 https://docs-examples.firebaseio.com/server/saving-data/fireblog/users/alanisawesome/full_nameURL로 이동하면 'Alan Turing'이라는 값이 표시된다. 하위 위치에 데이터를 직접 저장할 수도 있다.
+
+- **저장된 데이터 업데이트**
+
+데이터베이스 위치에서 다른 하위 노드를 덮어쓰지 않고 여러 하위 노드에  동시에 쓰려면 아래와 같이 update 메서드를 사용한다.
+
+```javascript
+var hopperRef = userRef.child("gracehop");
+hopperRef.update({
+  "nickname" : "Amazing Grace"
+})
+```
+
+**이렇게 하면 Grace의 데이터가 업데이트되어 별명이 포함된다. update 대신 set을 사용하면 hopperRef에서 `full_name` 및 `date_of_birth` 모두가 삭제된다.**
+
+Firebase 실시간 데이터베이스는 다중 경로 업데이트도 지원한다. 다시 말해 update로 데이터베이스의 여러 위치에서 동시에 값을 업데이트할 수 있으며, 이 강력한 기능을 통해 [데이터를 비정규화](https://firebase.googleblog.com/2013/04/denormalizing-your-data-is-normal.html)할 수 있다. 다중 경로 업데이트를 사용하여 Alan과 Grace의 닉네임을 동시에 추가할 수 있다.
+
+```javascript
+usersRef.update({
+  "alanisawesome/nickname": "Alan The Machine",
+  "gracehop/nickname": "Amazing Grace"
+});
+```
+
+경로가 포함된 객체를 기록하여 객체를 업데이트하려고 하면 동작이 달라진다. Grace와 Alan을 다음과 같은 방법으로 업데이트하면 어떻게 되는지 살펴보겠습니다.
+
+```javascript
+usersRef.update({
+  "alanisawesome": {
+    "nickname": "Alan The Machine"
+  },
+  "gracehop": {
+    "nickname": "Amazing Grace"
+  }
+});
+```
+
+이렇게 하면 동작이 달라져서 전체 `/users` 노드를 덮어쓰게 된다.
+
+- **데이터 목록 저장**
+
+데이터 목록을 만들 때 대부분의 애플리케이션은 여러 사용자를 관리해야 한다는 점을 염두에 두고 목록 구조를 적절히 조정해야 한다. 
+
+e.g. 앱에 블로그 게시물을 추가
+
+다음과 같이 자동으로 증가하는 정수 색인과 함께 **set**를 사용하여 하위 요소를 저장하는 방법이 가장 먼저 떠오른다.
+
+**[비추]** set()
+
+```
+{
+  "posts": {
+    "0": {
+      "author": "gracehop",
+      "title": "Announcing COBOL, a New Programming Language"
+    },
+    "1": {
+      "author": "alanisawesome",
+      "title": "The Turing Machine"
+    }
+  }
+}
+```
+
+`push와 transaction 비교`
+
+데이터 목록을 다룰 때 push()는 고유한 시간순 키를 보장한다. transaction을 대신 사용하여 자체 키를 생성하는 방법도 있겠지만, push가 훨씬 더 나은 방법이다. transaction은 속도가 더 느리고 복잡하며 서버를 1회 이상 왕복해야 한다. 클라이언트에서 push()로 생성한 키는 오프라인에서도 작동하고 성능이 최적화된다.
+
+[문제발생]
+
+사용자가 새 게시물을 추가하면 `/posts/2`로 저장됩니다. 게시자가 1명이면 문제가 없지만, 수많은 사용자가 접속하는 블로깅 애플리케이션에서는 여러 사용자가 동시에 게시물을 추가할 수 있습니다. 2명의 사용자가 동시에 `/posts/2`에 기록하면 한 쪽 게시물이 다른 한 쪽을 삭제합니다.
+
+이 문제를 해결하기 위해 **Firebase 클라이언트는 새 하위 요소마다 고유 \*키를\* 생성하는 `push()` 함수를 제공합니다.**고유 하위 키를 사용하면 여러 클라이언트에서 쓰기 충돌에 대한 걱정 없이 동시에 같은 위치에 하위 요소를 추가할 수 있습니다.
+
+**[추천]** push()
+
+```javascript
+var postsRef = ref.child("posts");
+
+var newPostRef = postsRef.push();
+newPostRef.set({
+  author: "gracehop",
+  title: "Announcing COBOL, a New Programming Language"
+});
+
+// we can also chain the two calls together
+postsRef.push().set({
+  author: "alanisawesome",
+  title: "The Turing Machine"
+});
+```
+
+**[결과]**
+
+```javascript
+{
+  "posts": {
+    "-JRHTHaIs-jNPLXOQivY": {
+      "author": "gracehop",
+      "title": "Announcing COBOL, a New Programming Language"
+    },
+    "-JRHTHaKuITFIhnj02kE": {
+      "author": "alanisawesome",
+      "title": "The Turing Machine"
+    }
+  }
+}
+```
+
+자바스크립트, Python, Go에서는 `push()`와 `set()`을 연달아 호출하는 패턴이 흔히 나타나므로 Firebase SDK에서 다음과 같이 설정할 데이터를 `push()`에 직접 전달하여 두 메서드를 결합할 수 있다.
+
+```javascript
+// This is equivalent to the calls to push().set(...) above
+postsRef.push({
+  author: "gracehop",
+  title: "Announcing COBOL, a New Programming Language"
+});
+```
+
+- push()가 생성한 고유 키 가져오기
+
+push()를 호출하면 새 데이터 경로에 대한 참조가 반환되고, 이 참조로 키를 가져오거나 데이터를 설정할 수 있다. 다음 코드는 위 예시와 동일한 데이터를 반환하지만 이제 생성된 고유 키에 액세스할 수 있다.
+
+```javascript
+//Generate a reference to a new location and add some data using push()
+var newPostRef = postsRef.push();
+
+//Get the unique key generated by push()
+var postId = newPostRef.key;
+```
+
+
+
+#### 트랜잭션 데이터 저장
+
+증분 카운터와 같이 동시 수정으로 인해  손상될 수 있는 복잡한 데이터를 다루는 경우를 위해 SDK에서 [트랜잭션 작업](https://firebase.google.com/docs/reference/node/firebase.database.Reference#transaction)이 제공된다.
+
+자바 및 Node.js에서는 트랜잭션 작업에 2가지 콜백, 즉 업데이트 함수 및 선택적 완료 콜백을 지정할 수 있습니다. Python 및 Go에서는 트랜잭션 작업이 블로킹 방식이므로 업데이트 함수만 취한다.
+
+업데이트 함수는 데이터의 현재 상태를 인수로 취하고 이 데이터에 새로 기록하려는 상태를 반환한다. 예를 들어 특정 블로그 게시물의 추천 수를 증가시키려는 경우 다음과 같은 트랜잭션을 작성할 수 있다.
+
+```javascript
+var upvotesRef = db.ref("server/saving-data/fireblog/posts/-JRHTHaIs-jNPLXOQivY/upvotes");
+upvotesRef.transaction(function (current_value) {
+  return (current_value || 0) + 1;
+});
+```
+
+`여러 번 호출되는 트랜잭션 함수`
+
+트랜잭션 핸들러가 수 차례 호출되어 `null` 데이터를 처리할 수 있어야 합니다. 데이터베이스에 기존 데이터가 있더라도 트랜잭션 함수가 실행될 때 로컬에 캐시된 데이터가 없을 수도 있습니다.
+
+## 데이터 검색
+
+e.g. 게시물 데이터 읽기
+
+```javascript
+//Import Admin SDK
+var admin = require('firebase-admin');
+
+//Get a database reference to our posts
+var db = admin.database();
+var ref = db.ref("server/saving-data/fireblog/posts");
+
+//Attach an asynchronous callback to read the data at our posts reference
+ref.on('value', function(snapshot) {
+  console.log(snapshot.val());
+}, function(errorObjects){
+  console.log("The read failed: " + errorObject.code);
+});
+
+```
+
+위 코드를 실행하면 모든 게시물이 포함된 객체가 Console에 로깅됩니다. **Node.js와 자바의 경우 데이터베이스 참조에 새 데이터가 추가될 때마다 리스너 함수가 호출되며, 이 기능을 구현하기 위해 별도의 코드를 작성할 필요가 없습니다.**
+
+자바와 Node.js에서 콜백 함수는 데이터의 스냅샷인 `DataSnapshot`을 수신합니다. 스냅샷은 단일 시점에 특정 데이터베이스 참조에 있던 데이터를 촬영한 사진과 같습니다. 스냅샷에서 `val()`/`getValue()`를 호출하면 데이터의 언어별 객체 표현이 반환됩니다. 참조 위치에 데이터가 없으면 스냅샷의 값은 `null`입니다. Python의 `get()` 메서드는 데이터의 Python 표현을 직접 반환합니다. Go의 `Get()` 함수는 데이터를 지정된 데이터 구조로 마셜링 취소합니다.
+
+위 예시에서는 `value` 이벤트 유형을 사용했는데, 이 유형은 데이터가 하나만 변경되어도 Firebase 데이터베이스 참조의 전체 콘텐츠를 읽습니다. `value`는 데이터베이스에서 데이터를 읽는 데 사용할 수 있는 아래의 5가지 이벤트 유형 중 하나입니다.
+
+`value` 이벤트는 읽기 이벤트 발생 시점에 특정 데이터베이스 경로에 있던 내용의 정적 스냅샷(snapshot)을 읽는 데 사용됩니다. 이 이벤트는 **초기 데이터가 확인될 때 한 번 발생한 후 데이터가 변경될 때마다 발생**합니다. 하위 데이터를 포함하여 해당 위치의 모든 데이터를 포함하는 스냅샷이 이벤트 콜백에 전달됩니다. 위의 코드 예시에서 `value`는 앱의 모든 블로그 게시물을 반환했습니다. 새 블로그 게시물이 추가될 때마다 콜백 함수가 모든 게시물을 반환합니다.
+
+1. **하위 항목 추가 - child_added**
+
+- 위치의 전체 콘텐츠를 반환하는 `value`와 달리 `child_added` 는 기존 하위 항목마다 한 번씩 트리거된 후 지정된 후 지정된 경로에 하위 항목이 새로 추가될 때마다 다시 트리거된다. 새 하위 항목의 데이터를 포함하는 스냅샷이 이벤트 콜백에 전달된다. **정렬을 위해 이전 하위 항목의 키를 포함하는 두번째 인수도 전달된다.**
+
+```javascript
+ref.on("child_added", function(snapshot, prevChildKey){
+  var newPost = snapshot.val();
+  console.log("Author: " + newPost.author);
+  console.log("Title: " + newPost.title);
+  console.log("Previous Post ID: " + prevChildKey);
+})
+```
+
+이 예시에서 스냅샷은 개별 블로그 게시물이 있는 **객체**를 포함한다. SDK는 값을 검색하여 게시물을 객체로 변환하므로 author와 title을 각각 호출하여 게시물의 저자 및 제목 속성에 액세스할 수 있다. 또한 두 번째 `prevChildKey` 인수에서 이전 게시물 ID에 액세스할 수 있다.
+
+2. **하위 항목 변경 - child_changed**
+
+하위 노드가 수정될 때마다 `child_changed` 이벤트가 트리거된다. 여기에는 하위 노드의 하위 항목에 대한 수정이 포함된다. 이 이벤트는 일반적으로 `child_added` 및 `child_removed` 와  함께 항목 목록의 변경에 대응하는 데 사용된다. 이벤트 콜백에 전달되는 스냅샷에는 하위 항목의 업데이트된 데이터가 포함된다.
+
+e.g. 블로그 게시물이 수정되면 child_changed를 사용하여 업데이트된 데이터를 읽을 수 있다.
+
+```javascript
+//Get the data on a post that has changed
+ref.on("child_changed", function(snapshot){
+  var changedPost = snapshot.val();
+  console.log("The updated post title is " + changedPost.title);
+});
+```
+
+3. **하위 항목 삭제 - child_removed**
+
+`child_removed` 이벤트는 바로 아래 하위 항목이 삭제될 때 트리거된다. 일반적으로 child_added 및 child_changed와 함께 사용된다. 이벤트 콜백에 전달되는 스냅샷에는 삭제된 하위 항목의 데이터가 포함된다.
+
+e.g. 블로그 예시에서 삭제된 게시물에 대한 알림을 console에 로깅할 수 있다.
+
+```javascript
+//Get a reference to our posts
+var ref = db.ref("server/saving-data/fireblog/posts");
+
+//Get the data on a post that has been removed
+ref.on("child_removed", function(snapshot){
+  var deletedPost = snapshot.val();
+  console.log("The blog post titled '" + deletedPost.title + "' has been deleted");
+});
+```
+
+4. **하위 항목 이동 - child_moved**
+
+뒤에서 자세히 다룰 예정
+
+
+
+### 이벤트 보증
+
+| 데이터베이스 이벤트 보증                                     |
+| :----------------------------------------------------------- |
+| 로컬 상태가 변경되면 항상 이벤트가 발생합니다.               |
+| 네트워크 연결이 잠시 끊길 때와 같이 로컬 작업 또는 타이밍으로 인해 일시적인 차이가 발생하더라도 이벤트는 결과적으로 항상 데이터의 올바른 상태를 반영합니다. |
+| 단일 클라이언트의 쓰기 작업은 항상 서버에 기록된 후에 다른 사용자에게 전파됩니다. |
+| 값 이벤트는 항상 마지막에 발생하며, 스냅샷이 생성되기 전에 발생한 모든 기타 이벤트의 업데이트를 항상 포함합니다. |
+
+value event는 항상 마지막에 발생하므로 다음예제는 항상 정상적으로 작동한다.
+
+```javascript
+var count = 0;
+
+ref.on("child_added", function(snap){
+  count++;
+  console.log("added:", snap.key);
+});
+
+//length will always equal count, since snap.val() will
+//include every child_added event triggered before this point
+ref.once("value", function(snap){
+  console.log("initial data loaded!", snap.numChildren() === count);
+});
+```
+
+
+
+### 콜백 분리
+
+콜백을 삭제하려면 다음과 같이 이벤트 유형 및 삭제할 콜백 함수를 지정한다.
+
+```javascript
+ref.off("value", originalCallback);
+```
+
+범위 컨텍스트를 on()에 전달한 경우 콜백을 분리할 때도 전달해야한다.
+
+```javascript
+ref.off("value", originalCallback, this);
+```
+
+✰ 한 데이터 위치에 콜백을 여러 번 추가한 경우 이벤트가 발생할 때마다 콜백이 여러 번 호출되며, 콜백을 완전히 삭제하려면 여러 번 분리해야 합니다.
+
+
+
+특정 위치의 모든 콜백을 삭제하려면 다음을 수행한다.
+
+```javascript
+//Remove all value callbacks
+ref.off("value");
+
+//Remove all callbacks of any type
+ref.off();
+```
+
+
+
+- 데이터 한 번 읽기
+
+  
+
+- 데이터 쿼리
+
+  - 지정된 하위 키로 정렬
+  - 키로 정렬
+  - 값으로 정렬
+
+- 복잡한 쿼리
+
+  - 제한 쿼리
+  - 범위 쿼리
+  - 하나로 결합
